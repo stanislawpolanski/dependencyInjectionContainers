@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using dependencyInjectionContainers.Models;
+using dependencyInjectionContainers.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dependencyInjectionContainers.Controllers
@@ -10,11 +12,17 @@ namespace dependencyInjectionContainers.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly ITopicAreaService _topicAreaService;
+        public ValuesController(ITopicAreaService topicAreaService)
+        {
+            _topicAreaService = topicAreaService;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IEnumerable<TopicArea> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _topicAreaService.GetAllTopicAreas();
         }
 
         // GET api/values/5
